@@ -5,7 +5,7 @@ export default async function Home() {
   const categories = await getAllCategories();
 
   return (
-    <div className="w-full max-w-4xl mx-auto flex flex-col justify-center items-center gap-10 text-center my-8">
+    <div className="w-full max-w-6xl mx-auto flex flex-col justify-center items-center gap-10 text-center my-8">
       <div className="w-full max-w-2xl mx-auto flex flex-col gap-4">
         <h1 className="text-4xl sm:text-5xl text-yellow-800 font-bold">
           Descubre recetas deliciosas
@@ -15,7 +15,8 @@ export default async function Home() {
           una categoría!
         </p>
       </div>
-      <div className="flex w-full max-w-lg rounded-full overflow-hidden shadow-lg">
+      
+      <div className="flex w-full max-w-lg rounded-full overflow-hidden shadow-lg mt-2">
         <input
           type="text"
           placeholder="Buscar por nombre de receta..."

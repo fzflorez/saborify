@@ -13,8 +13,8 @@ export default function HomeClient({ categories }: HomeClientProps) {
   const [categoryName, setCategoryName] = useState(categories[0].strCategory);
 
   return (
-    <div>
-      <div className="flex flex-wrap justify-center gap-4">
+    <div className="flex flex-col gap-10">
+      <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-4">
         {categories.map((category) => (
           <CategoryButton
             key={category.idCategory}
