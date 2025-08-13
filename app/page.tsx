@@ -1,8 +1,9 @@
+import HomeClient from "@/src/components/home-client";
 import { getAllCategories } from "@/src/services/mealdbService";
-import CategoryButton from "@/src/ui/category-button";
 
 export default async function Home() {
-  const categories = await getAllCategories()
+  const categories = await getAllCategories();
+
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col justify-center items-center gap-10 text-center my-8">
       <div className="w-full max-w-2xl mx-auto flex flex-col gap-4">
@@ -28,11 +29,7 @@ export default async function Home() {
         </button>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-4">
-        {categories.map((category) => (
-          <CategoryButton category={category} key={category.idCategory} />
-        ))}
-      </div>
+      <HomeClient categories={categories} />
     </div>
   );
 }

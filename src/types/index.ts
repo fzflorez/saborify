@@ -1,4 +1,12 @@
 import z from "zod";
-import { CategoryResponseSchema } from "../schema/schema";
+import {
+  CategoriesResponseSchema,
+  CategoryResponseSchema,
+  MealResponseSchema,
+  MealsResponseSchema,
+} from "../schema/recipes-schema";
 
 export type Category = z.infer<typeof CategoryResponseSchema>;
+export type Categories = z.infer<typeof CategoriesResponseSchema>;
+export type MealByCategory = z.infer<typeof MealResponseSchema>;
+export type MealsByCategory = z.infer<typeof MealsResponseSchema>;

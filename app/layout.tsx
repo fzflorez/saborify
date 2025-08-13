@@ -16,9 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`bg-gray-100 antialiased`}>
         <HomeHeader />
-        <main>
-          {children}
-        </main>
+        <main>{children}</main>
       </body>
     </html>
   );
