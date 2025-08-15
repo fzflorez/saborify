@@ -1,11 +1,10 @@
 "use client";
 
-import { Dispatch, SetStateAction } from "react";
 import { Category } from "../types";
 
 type CategoryButtonProps = {
   category: Category;
-  setCategoryName: Dispatch<SetStateAction<string>>;
+  setCategoryName: (name: string) => void;
 };
 
 export default function CategoryButton({
@@ -18,6 +17,7 @@ export default function CategoryButton({
 
   return (
     <button
+      type="button"
       className="px-5 py-2 rounded-full bg-yellow-700 hover:bg-yellow-800 transition duration-300 ease-in-out"
       onClick={handleClick}
     >

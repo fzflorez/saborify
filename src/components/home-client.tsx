@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Categories } from "../types";
-import CategoryButton from "../ui/category-button";
 import RecipeList from "./recipes-list";
+import CategoryList from "./category-list"; // Nuevo componente
 
 type HomeClientProps = {
   categories: Categories;
@@ -12,19 +12,21 @@ type HomeClientProps = {
 export default function HomeClient({ categories }: HomeClientProps) {
   const [categoryName, setCategoryName] = useState(categories[0].strCategory);
 
+  // Memoriza el callback para evitar renders innecesarios
+  const handleSetCategoryName = useCallback(
+    (name: string) => setCategoryName(name),
+    []
+  );
+
   return (
     <div className="flex flex-col gap-10">
-      <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-4">
-        {categories.map((category) => (
-          <CategoryButton
-            key={category.idCategory}
-            category={category}
-            setCategoryName={setCategoryName}
-          />
-        ))}
+      <CategoryList
+        categories={categories}
+        setCategoryName={handleSetCategoryName}
+      />
+      <div className="min-h-screen">
+        <RecipeList categoryName={categoryName} />
       </div>
-
-      <RecipeList categoryName={categoryName} />
     </div>
   );
 }

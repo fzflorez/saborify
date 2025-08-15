@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   CategoriesResponseSchema,
   MealsResponseSchema,
+  RecipeResponseSchema,
 } from "../schema/recipes-schema";
 import { MealByCategory } from "../types";
 
@@ -35,3 +36,13 @@ export const getMealsByCategory = async (
     throw new Error(error as string);
   }
 };
+
+export const getMealById = async(idMeal: string) => {
+  const url = `${BASE_URL}/lookup.php?i=${idMeal}`;
+  const {data} = await axios(url)
+  const result = RecipeResponseSchema.safeParse(data.meals[0])
+  console.log(data.meals[0])
+  if (result.success) {
+    return result.data
+  }
+}

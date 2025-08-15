@@ -1,16 +1,23 @@
 import { create } from "zustand";
-import { MealsByCategory } from "../types";
-import { getMealsByCategory } from "../services/mealdbService";
+import { MealByCategory, MealsByCategory, Recipe } from "../types";
+import { getMealById, getMealsByCategory } from "../services/mealdbService";
+import { get } from "http";
 
 type Store = {
   mealsByCategory: MealsByCategory;
+  modal: boolean;
+  selectRecipe: Recipe;
   fetchMealsByCategory: (categoryName: string) => Promise<void>;
+  fetchMealById: (id: string) => Promise<void>
+  closeModal: () => void;
   fetchMealByCategoryError: boolean;
   fetchMealByCategoryLoading: boolean;
 };
 
 export const useStore = create<Store>((set) => ({
   mealsByCategory: [],
+  modal: false,
+  selectRecipe: {} as Recipe,
   fetchMealByCategoryError: false,
   fetchMealByCategoryLoading: false,
   fetchMealsByCategory: async (categoryName: string) => {
@@ -39,5 +46,22 @@ export const useStore = create<Store>((set) => ({
         fetchMealByCategoryError: true,
       }));
     }
+  },
+  fetchMealById: async (id: string) => {
+    const selectRecipe = await getMealById(id)
+    set({
+      selectRecipe,
+      modal: true,
+      fetchMealByCategoryLoading: false,
+      fetchMealByCategoryError: false,
+    })
+  }, 
+  closeModal: () => {
+    set({
+      modal: false,
+      selectRecipe: {} as Recipe,
+      fetchMealByCategoryLoading: false,
+      fetchMealByCategoryError: false,
+    })
   },
 }));

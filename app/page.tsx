@@ -1,4 +1,6 @@
 import HomeClient from "@/src/components/home-client";
+import RecipeModal from "@/src/components/recipe-modal";
+import SearchBar from "@/src/components/search-bar";
 import { getAllCategories } from "@/src/services/mealdbService";
 
 export default async function Home() {
@@ -15,22 +17,12 @@ export default async function Home() {
           una categoría!
         </p>
       </div>
-      
-      <div className="flex w-full max-w-lg rounded-full overflow-hidden shadow-lg mt-2">
-        <input
-          type="text"
-          placeholder="Buscar por nombre de receta..."
-          className="w-full px-5 py-3 bg-white focus:outline-none text-gray-700"
-        />
-        <button
-          type="button"
-          className="px-5 py-3 bg-yellow-800 text-white font-semibold hover:bg-yellow-900 transition duration-300 ease-in-out"
-        >
-          Buscar
-        </button>
-      </div>
-
+      <SearchBar />
       <HomeClient categories={categories} />
+      <RecipeModal />
     </div>
   );
 }
+;
+
+
