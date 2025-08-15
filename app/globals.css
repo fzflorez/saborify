@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent; /* Fondo transparente */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: rgba(134, 134, 134, 0.5); /* Color con transparencia (verde esmeralda) */
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(143, 143, 143, 0.8); /* Más opaco al hacer hover */
+}

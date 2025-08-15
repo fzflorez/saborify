@@ -48,7 +48,7 @@ export default function RecipeModal() {
 
         {/* Contenedor del modal */}
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex h-full w-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -59,7 +59,7 @@ export default function RecipeModal() {
               leaveTo="opacity-0 scale-95"
             >
               {/* Panel del modal */}
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl">
+              <Dialog.Panel className="relative h-full overflow-y-scroll scrollbar-custom transform overflow-hidden rounded-lg bg-white p-6 text-left shadow-xl transition sm:w-full sm:max-w-3xl">
                 <Dialog.Title
                   as="h3"
                   className="text-gray-800 text-3xl font-bold truncate"
@@ -94,11 +94,13 @@ export default function RecipeModal() {
                   <Dialog.Title
                     as="h3"
                     className="text-gray-800 text-2xl font-bold mb-2"
-                  >                   
+                  >
                     Instructions
                   </Dialog.Title>
                   <div>
-                    <p className="text-gray-800 text-lg">{selectRecipe.strInstructions}</p>
+                    <p className="text-gray-800 text-lg">
+                      {selectRecipe.strInstructions}
+                    </p>
                   </div>
                 </div>
                 <button

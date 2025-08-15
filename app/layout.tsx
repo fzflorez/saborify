@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import HomeHeader from "@/src/components/home-header";
+import Footer from "@/src/components/footer";
 
 export const metadata: Metadata = {
   title: "Saborify",
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body className={`bg-gray-100 antialiased`}>
         <HomeHeader />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
