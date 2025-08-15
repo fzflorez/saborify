@@ -12,3 +12,4 @@ export type Categories = z.infer<typeof CategoriesResponseSchema>;
 export type MealByCategory = z.infer<typeof MealResponseSchema>;
 export type MealsByCategory = z.infer<typeof MealsResponseSchema>;
 export type Recipe = z.infer<typeof RecipeResponseSchema>;
+export type MealsByCategoryResponse = MealByCategory[] | Error;

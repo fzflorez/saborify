@@ -37,12 +37,12 @@ export const getMealsByCategory = async (
   }
 };
 
-export const getMealById = async(idMeal: string) => {
+export const getMealById = async (idMeal: string) => {
   const url = `${BASE_URL}/lookup.php?i=${idMeal}`;
-  const {data} = await axios(url)
-  const result = RecipeResponseSchema.safeParse(data.meals[0])
-  console.log(data.meals[0])
+  const { data } = await axios(url);
+  const result = RecipeResponseSchema.safeParse(data.meals[0]);
+  console.log(data.meals[0]);
   if (result.success) {
-    return result.data
+    return result.data;
   }
-}
+};

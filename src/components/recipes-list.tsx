@@ -14,9 +14,12 @@ export default function RecipeList({ categoryName }: RecipeListProps) {
   const fetchMealsByCategory = useStore((state) => state.fetchMealsByCategory);
   const mealsByCategory = useStore((state) => state.mealsByCategory);
   const fetchMealById = useStore((state) => state.fetchMealById);
-  const fetchMealByCategoryError = useStore((state) => state.fetchMealByCategoryError);
-  const fetchMealByCategoryLoading = useStore((state) => state.fetchMealByCategoryLoading);
-
+  const fetchMealByCategoryError = useStore(
+    (state) => state.fetchMealByCategoryError
+  );
+  const fetchMealByCategoryLoading = useStore(
+    (state) => state.fetchMealByCategoryLoading
+  );
 
   useEffect(() => {
     if (!categoryName) return;

@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import { Categories } from "../types";
 import RecipeList from "./recipes-list";
-import CategoryList from "./category-list"; // Nuevo componente
+import CategoryList from "./category-list";
 
 type HomeClientProps = {
   categories: Categories;
@@ -12,7 +12,6 @@ type HomeClientProps = {
 export default function HomeClient({ categories }: HomeClientProps) {
   const [categoryName, setCategoryName] = useState(categories[0].strCategory);
 
-  // Memoriza el callback para evitar renders innecesarios
   const handleSetCategoryName = useCallback(
     (name: string) => setCategoryName(name),
     []

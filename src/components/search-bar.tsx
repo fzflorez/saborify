@@ -9,14 +9,14 @@ const SearchBar = memo(function SearchBar({}: SearchBarProps) {
     <div className="flex w-full max-w-lg rounded-full overflow-hidden shadow-lg mt-2">
       <input
         type="text"
-        placeholder="Buscar por nombre de receta..."
+        placeholder="Search by recipe name..."
         className="w-full px-5 py-3 bg-white focus:outline-none text-gray-700"
       />
       <button
         type="button"
         className="px-5 py-3 bg-yellow-800 text-white font-semibold hover:bg-yellow-900 transition duration-300 ease-in-out"
       >
-        Buscar
+        Search
       </button>
     </div>
   );
