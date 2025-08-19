@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { Category } from "../types";
 
 type CategoryButtonProps = {
@@ -7,7 +8,7 @@ type CategoryButtonProps = {
   setCategoryName: (name: string) => void;
 };
 
-export default function CategoryButton({
+const CategoryButtton = memo(function CategoryButton({
   category,
   setCategoryName,
 }: CategoryButtonProps) {
@@ -24,4 +25,6 @@ export default function CategoryButton({
       <span className="text-white">{category.strCategory}</span>
     </button>
   );
-}
+})
+
+export default CategoryButtton;

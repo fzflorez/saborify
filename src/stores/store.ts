@@ -1,24 +1,40 @@
 import { create } from "zustand";
 import { MealsByCategory, Recipe } from "../types";
-import { getMealById, getMealsByCategory } from "../services/mealdbService";
+import {
+  getMealById,
+  getMealsByCategory,
+  getMealsBySearch,
+} from "../services/mealdbService";
 
 type Store = {
   mealsByCategory: MealsByCategory;
   modal: boolean;
   selectRecipe: Recipe;
+  mealsBySearch: MealsByCategory;
   fetchMealsByCategory: (categoryName: string) => Promise<void>;
   fetchMealById: (id: string) => Promise<void>;
   closeModal: () => void;
   fetchMealByCategoryError: boolean;
   fetchMealByCategoryLoading: boolean;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  fetchMealsBySearch: (search: string) => Promise<void>;
+  fetchMealsBySearchLoading: boolean;
+  fetchMealsBySearchError: boolean;
+  clearSearchResults: () => void;
 };
 
 export const useStore = create<Store>((set) => ({
   mealsByCategory: [],
   modal: false,
   selectRecipe: {} as Recipe,
+  mealsBySearch: [],
   fetchMealByCategoryError: false,
   fetchMealByCategoryLoading: false,
+  fetchMealsBySearchLoading: false,
+  fetchMealsBySearchError: false,
+  searchTerm: "",
+  setSearchTerm: (term) => set({ searchTerm: term }),
   fetchMealsByCategory: async (categoryName: string) => {
     set(() => ({
       fetchMealByCategoryLoading: true,
@@ -46,6 +62,7 @@ export const useStore = create<Store>((set) => ({
       }));
     }
   },
+
   fetchMealById: async (id: string) => {
     const selectRecipe = await getMealById(id);
     set({
@@ -55,6 +72,7 @@ export const useStore = create<Store>((set) => ({
       fetchMealByCategoryError: false,
     });
   },
+
   closeModal: () => {
     set({
       modal: false,
@@ -63,4 +81,27 @@ export const useStore = create<Store>((set) => ({
       fetchMealByCategoryError: false,
     });
   },
+
+  fetchMealsBySearch: async (search: string) => {
+    set({
+      fetchMealsBySearchLoading: true,
+      fetchMealsBySearchError: false,
+    });
+    try {
+      const mealsBySearch = await getMealsBySearch(search);
+      set({
+        mealsBySearch,
+        fetchMealsBySearchLoading: false,
+        fetchMealsBySearchError: false,
+      });
+    } catch (error) {
+      set({
+        mealsBySearch: [],
+        fetchMealsBySearchLoading: false,
+        fetchMealsBySearchError: true,
+      });
+    }
+  },
+
+  clearSearchResults: () => set({ mealsBySearch: [], searchTerm: "" }),
 }));

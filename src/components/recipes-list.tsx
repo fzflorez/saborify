@@ -5,6 +5,7 @@ import { useStore } from "../stores/store";
 import Card from "../ui/card";
 import Image from "next/image";
 import { MealByCategory } from "../types";
+import MessageDisplay from "./message-display";
 
 type RecipeListProps = {
   categoryName: string;
@@ -14,6 +15,11 @@ export default function RecipeList({ categoryName }: RecipeListProps) {
   const fetchMealsByCategory = useStore((state) => state.fetchMealsByCategory);
   const mealsByCategory = useStore((state) => state.mealsByCategory);
   const fetchMealById = useStore((state) => state.fetchMealById);
+  const searchTerm = useStore((state) => state.searchTerm);
+  const mealsBySearch = useStore((state) => state.mealsBySearch);
+  const searchLoading = useStore((state) => state.fetchMealsBySearchLoading);
+  const searchError = useStore((state) => state.fetchMealsBySearchError);
+
   const fetchMealByCategoryError = useStore(
     (state) => state.fetchMealByCategoryError
   );
@@ -23,21 +29,62 @@ export default function RecipeList({ categoryName }: RecipeListProps) {
 
   useEffect(() => {
     if (!categoryName) return;
-    fetchMealsByCategory(categoryName);
-  }, [categoryName, fetchMealsByCategory]);
 
-  if (fetchMealByCategoryLoading) {
-    return <div>Cargando recetas de la categoría {categoryName}...</div>;
-  }
+    if (searchTerm.trim() === "") {
+      fetchMealsByCategory(categoryName);
+    }
+  }, [categoryName, searchTerm, fetchMealsByCategory]);
 
-  if (fetchMealByCategoryError) {
-    return <div>Ha ocurrido un error al obtener las recetas.</div>;
+  let recipesToShow: MealByCategory[] = [];
+
+  if (mealsBySearch.length > 0) {
+    recipesToShow = mealsBySearch;
+  } else if (searchTerm.trim() !== "") {
+    recipesToShow = [];
+  } else {
+    recipesToShow = mealsByCategory;
   }
 
   return (
-    <>
+    <div>
+      {/* Loading */}
+      {(searchLoading || fetchMealByCategoryLoading) && (
+        <MessageDisplay type="loading" message="Cargando recetas..." />
+      )}
+
+      {/* Error */}
+      {(searchError || fetchMealByCategoryError) && (
+        <MessageDisplay
+          type="error"
+          message="Ha ocurrido un error al obtener las recetas. Intenta nuevamente."
+        />
+      )}
+
+      {/* No resultados en búsqueda */}
+      {searchTerm.trim() !== "" &&
+        recipesToShow.length === 0 &&
+        !searchLoading &&
+        !searchError && (
+          <MessageDisplay
+            type="noResults"
+            message="No se encontraron recetas."
+          />
+        )}
+
+      {/* Categoría vacía */}
+      {!searchTerm.trim() &&
+        recipesToShow.length === 0 &&
+        !fetchMealByCategoryLoading &&
+        !fetchMealByCategoryError && (
+          <MessageDisplay
+            type="noResults"
+            message="No hay recetas en esta categoría."
+          />
+        )}
+
+      {/* Grid de recetas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-        {mealsByCategory
+        {recipesToShow
           .filter(
             (meal): meal is MealByCategory & { strMealThumb: string } =>
               meal.strMealThumb !== null
@@ -63,6 +110,6 @@ export default function RecipeList({ categoryName }: RecipeListProps) {
             </button>
           ))}
       </div>
-    </>
+    </div>
   );
 }
